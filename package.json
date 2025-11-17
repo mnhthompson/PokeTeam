@@ -1,0 +1,18 @@
+{
+  "name": "my-project",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build --emptyOutDir",
+    "preview": "vite preview",
+    "lint": "eslint *.js src/**/*.js",
+    "format": "prettier --ignore-path ./.gitignore --write \"./**/*.{html,json,js,ts,css}\"",
+    "test": "vitest",
+    "dev": "vite"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "nodemon": "^3.1.0",
+    "vite": "^6.3.3"
+  }
+}

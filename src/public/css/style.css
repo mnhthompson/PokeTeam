@@ -1,0 +1,203 @@
+:root {
+  --color-bg: #FFFDD0;           
+  --color-text: #000000;        
+  --color-pokemon-border: #3B4CCA;  
+  --color-card-bg: #FFFDD0;         
+  --color-card-shadow: rgba(0, 0, 0, 0.1); 
+  --color-button-bg: #C0C0C0;      
+  --color-button-hover: #A9A9A9;   
+  --color-button-text: #000000;    
+  --color-slot-border: #3B4CCA;    
+  --color-slot-empty: #d3d3d3;     
+  --font-heading: 'Ariel', sans-serif;
+  --font-body: 'Ariel', sans-serif;
+  --font-body-size: 16px;
+  --border-radius: 8px;           
+  --shadow-default: 0 2px 6px var(--color-card-shadow);
+}
+
+/* ===================== Global Styles ===================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-size: var(--font-body-size);
+  line-height: 1.5;
+}
+
+/* ===================== Buttons ===================== */
+button {
+  background-color: var(--color-button-bg);
+  color: var(--color-button-text);
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+  background-color: var(--color-button-hover);
+  box-shadow: 0 4px 8px var(--color-card-shadow);
+}
+
+/* ===================== Cards (Pokémon / Team / Saved Teams) ===================== */
+.card {
+  background-color: var(--color-card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-default);
+  padding: 10px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px var(--color-card-shadow);
+}
+
+.card img {
+  border: 2px solid var(--color-pokemon-border);
+  border-radius: var(--border-radius);
+  width: 120px;
+  height: 120px;
+}
+
+/* ===================== Team Slots ===================== */
+.team-slots {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.slot {
+  background-color: var(--color-bg);
+  border: 2px dashed var(--color-slot-empty);
+  border-radius: var(--border-radius);
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slot.filled {
+  border: 2px solid var(--color-slot-border);
+}
+
+/* ===================== Modals ===================== */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: none; /* Show dynamically */
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: var(--color-bg);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+}
+
+/* ===================== Layout Containers ===================== */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+/* Home Page */
+.home-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+/* Team Builder Page */
+.team-builder {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 20px;
+}
+
+.pokemon-search {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pokemon-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.team-stats {
+  background-color: var(--color-card-bg);
+  border-radius: var(--border-radius);
+  padding: 15px;
+  box-shadow: var(--shadow-default);
+}
+
+/* Saved Teams Page */
+.saved-teams-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.saved-team-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-default);
+}
+
+/* ===================== Phone ===================== */
+@media (max-width: 900px) {
+  .team-builder {
+    grid-template-columns: 1fr;
+  }
+
+  .team-stats {
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 500px) {
+  button {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  .card img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .team-slots {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  }
+}

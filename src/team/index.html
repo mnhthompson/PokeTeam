@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pokémon Team Builder</title>
+  <link rel="stylesheet" href="./style.css" />
+  <script type="module" src="./team.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Team Builder</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="/src/team/index.html">Team Builder</a>
+      <a href="/src/save/index.html">Saved Teams</a>
+    </nav>
+  </header>
+
+<main>
+  <div class="container team-builder-page">
+    <div class="team-builder">
+
+      <!-- Left Panel: Pokémon Search -->
+      <aside class="pokemon-search">
+        <h2>Search Pokémon</h2>
+        <input type="text" id="pokemon-search-input" placeholder="Search by name">
+        <select id="type-filter">
+          <option value="">All Types</option>
+          <!-- Dynamically fill JS -->
+        </select>
+        <div class="pokemon-list" id="pokemon-list">
+          <!-- Pokémon cards JS -->
+        </div>
+      </aside>
+
+      <!-- Main Area: Team Slots -->
+      <main>
+        <h2>Your Team</h2>
+        <div class="team-slots" id="team-slots">
+          <!-- 6 slots for Pokémon team -->
+          <div class="slot" data-slot="1"></div>
+          <div class="slot" data-slot="2"></div>
+          <div class="slot" data-slot="3"></div>
+          <div class="slot" data-slot="4"></div>
+          <div class="slot" data-slot="5"></div>
+          <div class="slot" data-slot="6"></div>
+        </div>
+      </main>
+
+      <!-- Right Panel: Team Stats -->
+      <aside class="team-stats" id="team-stats">
+        <h2>Team Stats</h2>
+        <ul>
+          <li>Average HP: <span id="avg-hp">0</span></li>
+          <li>Average Attack: <span id="avg-attack">0</span></li>
+          <li>Average Defense: <span id="avg-defense">0</span></li>
+          <li>Average Speed: <span id="avg-speed">0</span></li>
+        </ul>
+        <h3>Type Coverage</h3>
+        <ul id="type-coverage">
+          <!-- JS -->
+        </ul>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Pokémon Detail Modal -->
+  <div class="modal" id="pokemon-modal">
+    <div class="modal-content">
+      <span id="modal-close" style="cursor:pointer; float:right;">&times;</span>
+      <img id="modal-sprite" src="" alt="Pokémon">
+      <h3 id="modal-name">Pokémon Name</h3>
+      <p>Type: <span id="modal-type"></span></p>
+      <p>Abilities: <span id="modal-abilities"></span></p>
+      <p>Stats:</p>
+      <ul id="modal-stats">
+        <!-- HP, Attack, Defense, etc. -->
+      </ul>
+      <button id="add-to-team">Add to Team</button>
+    </div>
+  </div>
+</main>
+
+  <footer>
+    <p>Powered by PokéAPI</p>
+  </footer>
+</body>
+</html>

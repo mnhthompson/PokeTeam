@@ -18,7 +18,7 @@ const addToTeamBtn = document.getElementById('add-to-team');
 
 let allPokemon = [];
 let currentPage = 0;
-const pageSize = 20;
+const pageSize = 6;
 
 let currentPokemon = null;
 

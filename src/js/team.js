@@ -17,6 +17,7 @@ const addToTeamBtn = document.getElementById('add-to-team');
 
 
 let allPokemon = JSON.parse(localStorage.getItem('allPokemon') || '[]');
+let displayedPokemon = [...allPokemon];
 let currentPage = 0;
 const pageSize = 6;
 
@@ -24,8 +25,8 @@ let currentPokemon = null;
 
 
 document.addEventListener("filterChanged", e => {
-  allPokemon = e.detail; // filtered array
-  renderPage(0);         // show first page
+  displayedPokemon = e.detail; // filtered array
+  renderPage(0);
 });
 
 
@@ -38,10 +39,10 @@ async function fetchAndCachePokemon(limit = 900) {
 
   for (const p of list) {
     const details = await fetchPokemonDetails(p.name);
-    allPokemon.push(details);
-  }
+    allPokemon.push(details);}
 
   localStorage.setItem('allPokemon', JSON.stringify(allPokemon));
+  displayedPokemon = [...allPokemon];
   return allPokemon;
 }
 
@@ -51,7 +52,7 @@ async function renderPage(page) {
 
   const start = page * pageSize;
   const end = start + pageSize;
-  const slice = allPokemon.slice(start, end);
+  const slice = displayedPokemon.slice(start, end);
 
   slice.forEach(details => {
     const card = document.createElement('div');

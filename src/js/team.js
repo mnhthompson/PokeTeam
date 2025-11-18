@@ -143,8 +143,14 @@ saveBtn.addEventListener('click', () => {
   const name = teamNameInput.value.trim();
   if (!name) return alert('Please enter a team name!');
   if (!team.length) return alert('Cannot save an empty team!');
-  saveTeam(name, team);
-  alert(`Team "${name}" saved!`);
+  
+  try {
+    saveTeam(name, team);
+    alert(`Team "${name}" saved!`);
+    teamNameInput.value = ''; // clear input
+  } catch (err) {
+    alert(err.message);
+  }
 });
 
   export { allPokemon, renderPage };

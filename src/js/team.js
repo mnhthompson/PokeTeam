@@ -23,8 +23,14 @@ const pageSize = 6;
 let currentPokemon = null;
 
 
+document.addEventListener("filterChanged", e => {
+  allPokemon = e.detail; // filtered array
+  renderPage(0);         // show first page
+});
+
+
   // Load Pokémon
-async function fetchAndCachePokemon(limit = 151) {
+async function fetchAndCachePokemon(limit = 900) {
   if (allPokemon.length >= limit) return allPokemon;
 
   const list = await fetchPokemonList(limit);
@@ -130,3 +136,4 @@ document.getElementById('prev-page')?.addEventListener('click', () => {
   if (currentPage > 0) renderPage(currentPage - 1);
 });
 
+fetchAndCachePokemon(900).then(() => renderPage(0));

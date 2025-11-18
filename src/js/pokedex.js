@@ -1,19 +1,25 @@
-
+// pokedex.js
 const searchInput = document.getElementById("pokemon-search-input");
 const typeFilter = document.getElementById("type-filter");
 const pokemonListEl = document.getElementById("pokemon-list");
 
-let allPokemon = JSON.parse(localStorage.getItem("allPokemon") || "[]");
-let filteredPokemon = [...allPokemon]; 
+// Wait until team.js has added cards
+const observer = new MutationObserver(() => {
+  if (pokemonListEl.children.length > 0) {
+    observer.disconnect();
+    initTypeFilter();
+  }
+});
 
-
+observer.observe(pokemonListEl, { childList: true });
 
 function initTypeFilter() {
   const types = new Set();
 
   // Scan all cards for types
-  allPokemon.forEach(p => {
-    p.types.forEach(t => types.add(t.type.name));
+  Array.from(pokemonListEl.children).forEach(card => {
+    const typeText = card.children[2].textContent; // "fire, flying"
+    typeText.split(", ").forEach(t => types.add(t));
   });
 
   // Populate dropdown
@@ -27,18 +33,20 @@ function initTypeFilter() {
 
 function applyFilters() {
   const search = searchInput.value.toLowerCase();
-  const type = typeFilter.value.toLowerCase();
+  const type = typeFilter.value;
 
-  filteredPokemon = allPokemon.filter(p => {
-    const nameMatch = p.name.toLowerCase().includes(search);
-    const typeMatch = type ? p.types.some(t => t.type.name.toLowerCase() === type) : true;
-    return nameMatch && typeMatch;
+  Array.from(pokemonListEl.children).forEach(card => {
+    const name = card.children[1].textContent.toLowerCase();
+    const types = card.children[2].textContent.toLowerCase(); // "fire, flying"
+
+    let visible = true;
+
+    if (search && !name.includes(search)) visible = false;
+    if (type && !types.includes(type.toLowerCase())) visible = false;
+
+    card.style.display = visible ? "block" : "none";
   });
-
-  document.dispatchEvent(new CustomEvent("filterChanged", { detail: filteredPokemon }));
 }
 
 searchInput?.addEventListener("input", applyFilters);
 typeFilter?.addEventListener("change", applyFilters);
-
-initTypeFilter();

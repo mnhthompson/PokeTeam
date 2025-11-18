@@ -1,5 +1,6 @@
 import { fetchPokemonList, fetchPokemonDetails } from './pokemon.js';
 import { addPokemonToTeam, removePokemonFromTeam, team, getTeamStats } from './teambuilder.js';
+import { setAllPokemon } from './pokedex.js';
 
 const pokemonListEl = document.getElementById('pokemon-list');
 const teamSlotsEl = document.getElementById('team-slots');
@@ -12,32 +13,22 @@ const modalAbilities = document.getElementById('modal-abilities');
 const modalStats = document.getElementById('modal-stats');
 const addToTeamBtn = document.getElementById('add-to-team');
 
-export let allPokemon = [];
-export let filteredPokemon = [];
-let currentPage = 0;
-const pageSize = 6;
+let allPokemon = [];
 let currentPokemon = null;
 
-const pokemonCache = new Map(); 
 
-
-export async function getPokemonDetails(p) {
-  if (pokemonCache.has(p.name)) return pokemonCache.get(p.name);
-  const details = await fetchPokemonDetails(p.name);
-  pokemonCache.set(p.name, details);
-  return details;
-}
-
-
-export async function loadAllPokemon() {
+async function loadAllPokemon() {
   const list = await fetchPokemonList(900);
-  allPokemon = list;
-  filteredPokemon = [...allPokemon];
+  allPokemon = list; 
+  setAllPokemon(allPokemon); 
   await renderPage(0);
 }
 
+loadAllPokemon();
+
+
 async function createPokemonCard(pokemon) {
-  const details = pokemon.stats ? pokemon : await getPokemonDetails(pokemon);
+  const details = pokemon.stats ? pokemon : await fetchPokemonDetails(pokemon.name);
 
   const card = document.createElement('div');
   card.className = 'card';
@@ -46,12 +37,16 @@ async function createPokemonCard(pokemon) {
     <p>${details.name}</p>
     <p>${details.types.map(t => t.type.name).join(', ')}</p>
   `;
+
   card.addEventListener('click', () => openModal(details));
   return card;
 }
 
 
-export async function renderPage(page, list = filteredPokemon) {
+let currentPage = 0;
+const pageSize = 6;
+
+async function renderPage(page, list = allPokemon) {
   currentPage = page;
   pokemonListEl.innerHTML = '';
   const start = page * pageSize;
@@ -63,6 +58,14 @@ export async function renderPage(page, list = filteredPokemon) {
     pokemonListEl.appendChild(card);
   }
 }
+
+document.getElementById('next-page')?.addEventListener('click', () => {
+  const maxPage = Math.floor(allPokemon.length / pageSize);
+  if (currentPage < maxPage) renderPage(currentPage + 1);
+});
+document.getElementById('prev-page')?.addEventListener('click', () => {
+  if (currentPage > 0) renderPage(currentPage - 1);
+});
 
 export function openModal(pokemon) {
   currentPokemon = pokemon;
@@ -78,18 +81,18 @@ export function openModal(pokemon) {
   });
   modal.style.display = 'flex';
 }
-
 modalClose?.addEventListener('click', () => (modal.style.display = 'none'));
 
 addToTeamBtn?.addEventListener('click', async () => {
   if (!currentPokemon) return;
-  const fullDetails = currentPokemon.stats ? currentPokemon : await getPokemonDetails(currentPokemon);
+  let fullDetails = currentPokemon.stats ? currentPokemon : await fetchPokemonDetails(currentPokemon.name);
   if (addPokemonToTeam(fullDetails)) renderTeam();
   else alert('Team is full!');
   modal.style.display = 'none';
 });
 
-export function renderTeam() {
+
+function renderTeam() {
   teamSlotsEl.innerHTML = '';
   for (let i = 0; i < 6; i++) {
     const slot = document.createElement('div');
@@ -119,11 +122,4 @@ export function renderTeam() {
   }
 }
 
-
-document.getElementById('next-page')?.addEventListener('click', () => {
-  const maxPage = Math.floor(filteredPokemon.length / pageSize);
-  if (currentPage < maxPage) renderPage(currentPage + 1, filteredPokemon);
-});
-document.getElementById('prev-page')?.addEventListener('click', () => {
-  if (currentPage > 0) renderPage(currentPage - 1, filteredPokemon);
-});
+export { allPokemon, renderPage };

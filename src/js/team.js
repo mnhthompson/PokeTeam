@@ -144,4 +144,6 @@ document.addEventListener("filterChanged", e => {
   renderPage(0);
 });
 
-init();
+document.addEventListener('DOMContentLoaded', () => {
+    init();
+});

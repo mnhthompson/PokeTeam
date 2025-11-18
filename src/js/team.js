@@ -16,7 +16,7 @@ const modalStats = document.getElementById('modal-stats');
 const addToTeamBtn = document.getElementById('add-to-team');
 
 
-let allPokemon = [];
+let allPokemon = JSON.parse(localStorage.getItem('allPokemon') || '[]');
 let currentPage = 0;
 const pageSize = 6;
 
@@ -24,11 +24,19 @@ let currentPokemon = null;
 
 
   // Load Pokémon
-if (pokemonListEl) {
-  fetchPokemonList(900).then(async list => {
-    allPokemon = list;
-    await renderPage(0); // load first page
-  });
+async function fetchAndCachePokemon(limit = 151) {
+  if (allPokemon.length >= limit) return allPokemon;
+
+  const list = await fetchPokemonList(limit);
+  allPokemon = [];
+
+  for (const p of list) {
+    const details = await fetchPokemonDetails(p.name);
+    allPokemon.push(details);
+  }
+
+  localStorage.setItem('allPokemon', JSON.stringify(allPokemon));
+  return allPokemon;
 }
 
 async function renderPage(page) {
@@ -39,9 +47,7 @@ async function renderPage(page) {
   const end = start + pageSize;
   const slice = allPokemon.slice(start, end);
 
-  for (const p of slice) {
-    const details = await fetchPokemonDetails(p.name);
-
+  slice.forEach(details => {
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
@@ -52,9 +58,8 @@ async function renderPage(page) {
 
     card.addEventListener('click', () => openModal(details));
     pokemonListEl.appendChild(card);
-  }
+  });
 }
-
 
 
 function openModal(pokemon) {
@@ -113,6 +118,8 @@ function renderTeam() {
     document.getElementById('avg-specialdefence').textContent = stats.specialdefense;
   }
 }
+
+
 
 document.getElementById('next-page')?.addEventListener('click', () => {
   const maxPage = Math.floor(allPokemon.length / pageSize);

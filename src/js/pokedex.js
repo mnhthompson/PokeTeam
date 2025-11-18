@@ -1,4 +1,4 @@
-import { allPokemon, renderPage, getPokemonDetails, filteredPokemon } from './team.js';
+import { allPokemon, filteredPokemon, getPokemonDetails, renderPage } from './team.js';
 
 const searchInput = document.getElementById("pokemon-search-input");
 const typeFilter = document.getElementById("type-filter");
@@ -25,11 +25,11 @@ function initTypeFilter() {
 }
 initTypeFilter();
 
-async function renderFilteredList() {
+export async function renderFilteredList() {
   const search = searchInput.value.toLowerCase();
   const type = typeFilter.value;
 
-  filteredPokemon.length = 0; // clear previous
+  filteredPokemon.length = 0; 
 
   for (const p of allPokemon) {
     const details = await getPokemonDetails(p);

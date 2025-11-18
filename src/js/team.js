@@ -1,6 +1,5 @@
 import { fetchPokemonList, fetchPokemonDetails } from './pokemon.js';
 import { addPokemonToTeam, removePokemonFromTeam, team, getTeamStats } from './teambuilder.js';
-import { setAllPokemon } from './pokedex.js';
 
 const pokemonListEl = document.getElementById('pokemon-list');
 const teamSlotsEl = document.getElementById('team-slots');
@@ -21,7 +20,8 @@ let currentPokemon = null;
 
 const pokemonCache = new Map(); 
 
-async function getPokemonDetails(p) {
+
+export async function getPokemonDetails(p) {
   if (pokemonCache.has(p.name)) return pokemonCache.get(p.name);
   const details = await fetchPokemonDetails(p.name);
   pokemonCache.set(p.name, details);
@@ -29,15 +29,12 @@ async function getPokemonDetails(p) {
 }
 
 
-async function loadAllPokemon() {
+export async function loadAllPokemon() {
   const list = await fetchPokemonList(900);
   allPokemon = list;
-  setAllPokemon(allPokemon);
   filteredPokemon = [...allPokemon]; 
   await renderPage(0);
 }
-
-loadAllPokemon();
 
 
 async function createPokemonCard(pokemon) {
@@ -50,13 +47,12 @@ async function createPokemonCard(pokemon) {
     <p>${details.name}</p>
     <p>${details.types.map(t => t.type.name).join(', ')}</p>
   `;
-
   card.addEventListener('click', () => openModal(details));
   return card;
 }
 
 
-async function renderPage(page, list = filteredPokemon) {
+export async function renderPage(page, list = filteredPokemon) {
   currentPage = page;
   pokemonListEl.innerHTML = '';
   const start = page * pageSize;
@@ -83,6 +79,7 @@ export function openModal(pokemon) {
   });
   modal.style.display = 'flex';
 }
+
 modalClose?.addEventListener('click', () => (modal.style.display = 'none'));
 
 addToTeamBtn?.addEventListener('click', async () => {
@@ -93,7 +90,7 @@ addToTeamBtn?.addEventListener('click', async () => {
   modal.style.display = 'none';
 });
 
-function renderTeam() {
+export function renderTeam() {
   teamSlotsEl.innerHTML = '';
   for (let i = 0; i < 6; i++) {
     const slot = document.createElement('div');
@@ -132,4 +129,4 @@ document.getElementById('prev-page')?.addEventListener('click', () => {
   if (currentPage > 0) renderPage(currentPage - 1, filteredPokemon);
 });
 
-export { allPokemon, filteredPokemon, renderPage, getPokemonDetails };
+export { allPokemon, filteredPokemon, loadAllPokemon };

@@ -19,7 +19,7 @@ async function generateDailyTeam() {
   team.forEach(pokemon => {
     const slot = document.createElement("div");
     slot.className = "slot";
-
+    slot.classList.add('filled');
     slot.innerHTML = `
       <img src="${pokemon.sprites.front_default}" 
            alt="${pokemon.name}" />

@@ -14,21 +14,34 @@ const modalStats = document.getElementById('modal-stats');
 const addToTeamBtn = document.getElementById('add-to-team');
 
 let allPokemon = [];
+let filteredPokemon = [];
+let currentPage = 0;
+const pageSize = 6;
 let currentPokemon = null;
 
-// Load Pokémon list (basic info)
+const pokemonCache = new Map(); 
+
+async function getPokemonDetails(p) {
+  if (pokemonCache.has(p.name)) return pokemonCache.get(p.name);
+  const details = await fetchPokemonDetails(p.name);
+  pokemonCache.set(p.name, details);
+  return details;
+}
+
+
 async function loadAllPokemon() {
   const list = await fetchPokemonList(900);
-  allPokemon = list; // basic info
-  setAllPokemon(allPokemon); // share with Pokédex
+  allPokemon = list;
+  setAllPokemon(allPokemon);
+  filteredPokemon = [...allPokemon]; 
   await renderPage(0);
 }
 
 loadAllPokemon();
 
-// Render a card with full details
+
 async function createPokemonCard(pokemon) {
-  const details = pokemon.stats ? pokemon : await fetchPokemonDetails(pokemon.name);
+  const details = pokemon.stats ? pokemon : await getPokemonDetails(pokemon);
 
   const card = document.createElement('div');
   card.className = 'card';
@@ -42,11 +55,8 @@ async function createPokemonCard(pokemon) {
   return card;
 }
 
-// Pagination
-let currentPage = 0;
-const pageSize = 6;
 
-async function renderPage(page, list = allPokemon) {
+async function renderPage(page, list = filteredPokemon) {
   currentPage = page;
   pokemonListEl.innerHTML = '';
   const start = page * pageSize;
@@ -59,15 +69,6 @@ async function renderPage(page, list = allPokemon) {
   }
 }
 
-document.getElementById('next-page')?.addEventListener('click', () => {
-  const maxPage = Math.floor(allPokemon.length / pageSize);
-  if (currentPage < maxPage) renderPage(currentPage + 1);
-});
-document.getElementById('prev-page')?.addEventListener('click', () => {
-  if (currentPage > 0) renderPage(currentPage - 1);
-});
-
-// Modal
 export function openModal(pokemon) {
   currentPokemon = pokemon;
   modalName.textContent = pokemon.name;
@@ -86,13 +87,12 @@ modalClose?.addEventListener('click', () => (modal.style.display = 'none'));
 
 addToTeamBtn?.addEventListener('click', async () => {
   if (!currentPokemon) return;
-  let fullDetails = currentPokemon.stats ? currentPokemon : await fetchPokemonDetails(currentPokemon.name);
+  const fullDetails = currentPokemon.stats ? currentPokemon : await getPokemonDetails(currentPokemon);
   if (addPokemonToTeam(fullDetails)) renderTeam();
   else alert('Team is full!');
   modal.style.display = 'none';
 });
 
-// Team rendering
 function renderTeam() {
   teamSlotsEl.innerHTML = '';
   for (let i = 0; i < 6; i++) {
@@ -123,4 +123,13 @@ function renderTeam() {
   }
 }
 
-export { allPokemon, renderPage };
+
+document.getElementById('next-page')?.addEventListener('click', () => {
+  const maxPage = Math.floor(filteredPokemon.length / pageSize);
+  if (currentPage < maxPage) renderPage(currentPage + 1, filteredPokemon);
+});
+document.getElementById('prev-page')?.addEventListener('click', () => {
+  if (currentPage > 0) renderPage(currentPage - 1, filteredPokemon);
+});
+
+export { allPokemon, filteredPokemon, renderPage, getPokemonDetails };

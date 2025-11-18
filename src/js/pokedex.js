@@ -1,8 +1,7 @@
-import { allPokemon, renderPage, openModal } from './team.js';
+import { allPokemon, renderPage, getPokemonDetails, filteredPokemon } from './team.js';
 
 const searchInput = document.getElementById("pokemon-search-input");
 const typeFilter = document.getElementById("type-filter");
-const pokemonListEl = document.getElementById("pokemon-list");
 
 const allTypes = [
   "normal", "fire", "water", "grass", "electric", "ice",
@@ -30,18 +29,20 @@ async function renderFilteredList() {
   const search = searchInput.value.toLowerCase();
   const type = typeFilter.value;
 
-  const filtered = allPokemon.filter(p => {
-    const name = p.name.toLowerCase();
-    const types = p.types?.map(t => t.type.name).join(', ').toLowerCase() || '';
-    return (!search || name.includes(search)) && (!type || types.includes(type.toLowerCase()));
-  });
+  filteredPokemon.length = 0; // clear previous
 
-  await renderPage(0, filtered);
+  for (const p of allPokemon) {
+    const details = await getPokemonDetails(p);
+    const name = details.name.toLowerCase();
+    const types = details.types.map(t => t.type.name).join(', ').toLowerCase();
+
+    if ((!search || name.includes(search)) && (!type || types.includes(type))) {
+      filteredPokemon.push(details);
+    }
+  }
+
+  renderPage(0, filteredPokemon);
 }
 
 searchInput?.addEventListener("input", renderFilteredList);
 typeFilter?.addEventListener("change", renderFilteredList);
-
-export function setAllPokemon(pokemonArray) {
-  // optional, if needed for external updates
-}

@@ -2,6 +2,7 @@ import { fetchPokemonDetails } from './pokemon.js';
 import { saveTeam } from './storage.js';
 
 const TEAM_SIZE = 6; 
+let currentDailyTeam = [];  
 
 async function generateDailyTeam() {
   const container = document.getElementById("daily-team");
@@ -14,7 +15,7 @@ async function generateDailyTeam() {
   }
 
   const team = await Promise.all(promises);
-
+  currentDailyTeam = team;
 
   team.forEach(pokemon => {
     const slot = document.createElement("div");
@@ -32,7 +33,6 @@ async function generateDailyTeam() {
 document.addEventListener("DOMContentLoaded", generateDailyTeam);
 
 
-let currentDailyTeam = [];  
 const saveDailyTeamBtn = document.getElementById('save-daily-team');
 if (saveDailyTeamBtn) {
   saveDailyTeamBtn.addEventListener('click', () => {

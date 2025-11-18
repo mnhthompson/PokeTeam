@@ -18,14 +18,14 @@ export function clearTeam() {
 
 export function getTeamStats() {
   if (!team.length) return null;
-  const stats = { hp: 0, attack: 0, defense: 0, speed: 0 };
+   const stats = { hp: 0, attack: 0, defense: 0, speed: 0, specialattack: 0, specialdefense: 0 };
   team.forEach(p => {
     stats.hp += p.stats.find(s => s.stat.name === 'hp').base_stat;
     stats.attack += p.stats.find(s => s.stat.name === 'attack').base_stat;
     stats.defense += p.stats.find(s => s.stat.name === 'defense').base_stat;
     stats.speed += p.stats.find(s => s.stat.name === 'speed').base_stat;
-    stats.specialattack += p.stats.find(s => s.stat.name === 'specialattack').base_stat;
-    stats.specialdefense += p.stats.find(s => s.stat.name === 'specialdefense').base_stat;
+    stats.specialattack += p.stats.find(s => s.stat.name === 'special-attack').base_stat;
+    stats.specialdefense += p.stats.find(s => s.stat.name === 'special-defense').base_stat;
   });
   return {
     hp: Math.round(stats.hp / team.length),

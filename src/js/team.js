@@ -123,20 +123,20 @@ function renderTeam() {
     document.getElementById('avg-defense').textContent = stats.defense ?? 0;
     document.getElementById('avg-speed').textContent = stats.speed ?? 0;
     document.getElementById('avg-special-attack').textContent = stats.specialattack ?? 0;
-    document.getElementById('avg-special-defence').textContent = stats.specialdefense ?? 0;
+   document.getElementById('avg-special-defense').textContent = stats.specialdefense ?? 0;
+
   }
 }
 
-loadBtn.addEventListener('click', () => {
-  sessionStorage.setItem('currentTeam', JSON.stringify(t.team));
-  window.location.href = '/team/index.html';
-});
 
 const savedTeam = JSON.parse(sessionStorage.getItem('currentTeam') || '[]');
 if (savedTeam.length) {
   clearTeam();
   savedTeam.forEach(p => addPokemonToTeam(p));
-  sessionStorage.removeItem('currentTeam');}
+  sessionStorage.removeItem('currentTeam');
+  renderTeam(); 
+}
+
 
 
 saveBtn.addEventListener('click', () => {

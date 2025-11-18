@@ -6,6 +6,7 @@
   <title>Pokémon Team Builder</title>
   <link rel="stylesheet" href="/css/style.css" />
   <script type="module" src="/js/team.js"></script>
+  <script type="module" src="/js/pokedex.js"></script>
 </head>
 <body>
   <header>
@@ -29,9 +30,17 @@
           <option value="">All Types</option>
           <!-- Dynamically fill JS -->
         </select>
+
         <div class="pokemon-list" id="pokemon-list">
           <!-- Pokémon cards JS -->
         </div>
+
+        <div class="pagination-controls">
+  <button id="prev-page">Previous</button>
+  <button id="next-page">Next</button>
+        </div>
+
+
       </aside>
 
       <!-- Main Area: Team Slots -->

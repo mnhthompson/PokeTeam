@@ -4,9 +4,6 @@ import { addPokemonToTeam, removePokemonFromTeam, team, getTeamStats } from './t
 
 
 
-
-
-
 const pokemonListEl = document.getElementById('pokemon-list');
 const teamSlotsEl = document.getElementById('team-slots');
 const modal = document.getElementById('pokemon-modal');
@@ -18,25 +15,47 @@ const modalAbilities = document.getElementById('modal-abilities');
 const modalStats = document.getElementById('modal-stats');
 const addToTeamBtn = document.getElementById('add-to-team');
 
+
+let allPokemon = [];
+let currentPage = 0;
+const pageSize = 20;
+
 let currentPokemon = null;
 
-if (pokemonListEl) {
+
   // Load Pokémon
-  fetchPokemonList(151).then(list => {
-    list.forEach(async p => {
-      const details = await fetchPokemonDetails(p.name);
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.innerHTML = `
-        <img src="${details.sprites.front_default}" alt="${details.name}">
-        <p>${details.name}</p>
-        <p>${details.types.map(t => t.type.name).join(', ')}</p>
-      `;
-      card.addEventListener('click', () => openModal(details));
-      pokemonListEl.appendChild(card);
-    });
+if (pokemonListEl) {
+  fetchPokemonList(900).then(async list => {
+    allPokemon = list;
+    await renderPage(0); // load first page
   });
 }
+
+async function renderPage(page) {
+  currentPage = page;
+  pokemonListEl.innerHTML = '';
+
+  const start = page * pageSize;
+  const end = start + pageSize;
+  const slice = allPokemon.slice(start, end);
+
+  for (const p of slice) {
+    const details = await fetchPokemonDetails(p.name);
+
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <img src="${details.sprites.front_default}" alt="${details.name}">
+      <p>${details.name}</p>
+      <p>${details.types.map(t => t.type.name).join(', ')}</p>
+    `;
+
+    card.addEventListener('click', () => openModal(details));
+    pokemonListEl.appendChild(card);
+  }
+}
+
+
 
 function openModal(pokemon) {
   currentPokemon = pokemon;
@@ -92,3 +111,13 @@ function renderTeam() {
     document.getElementById('avg-speed').textContent = stats.speed;
   }
 }
+
+document.getElementById('next-page')?.addEventListener('click', () => {
+  const maxPage = Math.floor(allPokemon.length / pageSize);
+  if (currentPage < maxPage) renderPage(currentPage + 1);
+});
+
+document.getElementById('prev-page')?.addEventListener('click', () => {
+  if (currentPage > 0) renderPage(currentPage - 1);
+});
+

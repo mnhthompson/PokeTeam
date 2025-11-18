@@ -19,8 +19,6 @@
 /* ===================== Global Styles ===================== */
 * {
   box-sizing: border-box;
-  margin: 10px;
-  padding: 10px;
   font-family: var(--font-body);
 }
 

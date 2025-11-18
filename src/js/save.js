@@ -68,7 +68,4 @@ exportBtn?.addEventListener('click', () => {
   URL.revokeObjectURL(url);
 });
 
-loadBtn.addEventListener('click', () => {
-  sessionStorage.setItem('currentTeam', JSON.stringify(t.team));
-  window.location.href = '/team/index.html';
-});
+

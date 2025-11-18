@@ -32,8 +32,8 @@ export function getTeamStats() {
     attack: Math.round(stats.attack / team.length),
     defense: Math.round(stats.defense / team.length),
     speed: Math.round(stats.speed / team.length),
-    specialattack: Math.round(stats.special-attack / team.length),
-    specialdefense: Math.round(stats.special-defense / team.length)
+    specialattack: Math.round(stats.specialattack / team.length),
+    specialdefense: Math.round(stats.specialdefense / team.length)
   };
 }
 

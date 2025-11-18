@@ -31,6 +31,35 @@ body {
   line-height: 1.5;
 }
 
+/* ===================== Navigation ===================== */
+header nav {
+  display: flex;
+  gap: 20px;
+  justify-content: center; 
+  margin-top: 10px;
+  padding: 10px 0;
+  background-color: #f0e68c; 
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-default);
+}
+
+header nav a {
+  text-decoration: none;
+  color: var(--color-text);
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: var(--border-radius);
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+header nav a:hover {
+  background-color: var(--color-pokemon-border);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+
+
 /* ===================== Buttons ===================== */
 button {
   background-color: var(--color-button-bg);

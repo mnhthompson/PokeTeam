@@ -70,6 +70,8 @@ button {
   cursor: pointer;
   font-weight: bold;
   transition: background 0.2s, box-shadow 0.2s;
+  margin-right: 10px; 
+  margin-bottom: 10px;
 }
 
 button:hover {
@@ -126,7 +128,6 @@ button:hover {
   justify-content: center;
   padding: 4px;
 }
-
 
 
 .slot.filled:hover {

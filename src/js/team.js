@@ -33,13 +33,20 @@ document.addEventListener("filterChanged", e => {
   // Load Pokémon
 async function fetchAndCachePokemon(limit = 900) {
   if (allPokemon.length >= limit) return allPokemon;
-
   const list = await fetchPokemonList(limit);
   allPokemon = [];
 
-  for (const p of list) {
+   for (const p of list) {
     const details = await fetchPokemonDetails(p.name);
-    allPokemon.push(details);}
+    const simplified = {
+      name: details.name,
+      types: details.types,
+      sprites: details.sprites,
+      abilities: details.abilities,
+      stats: details.stats
+    };
+    allPokemon.push(simplified);
+  }
 
   localStorage.setItem('allPokemon', JSON.stringify(allPokemon));
   displayedPokemon = [...allPokemon];
@@ -129,7 +136,7 @@ function renderTeam() {
 
 
 document.getElementById('next-page')?.addEventListener('click', () => {
-  const maxPage = Math.floor(allPokemon.length / pageSize);
+  const maxPage = Math.floor(displayedPokemon.length / pageSize);
   if (currentPage < maxPage) renderPage(currentPage + 1);
 });
 

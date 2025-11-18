@@ -1,29 +1,25 @@
-// pokedex.js
+import { openModal } from './team.js'; // reuse modal
+
 const searchInput = document.getElementById("pokemon-search-input");
 const typeFilter = document.getElementById("type-filter");
 const pokemonListEl = document.getElementById("pokemon-list");
 
-// Wait until team.js has added cards
-const observer = new MutationObserver(() => {
-  if (pokemonListEl.children.length > 0) {
-    observer.disconnect();
-    initTypeFilter();
-  }
-});
+let allPokemon = [];
 
-observer.observe(pokemonListEl, { childList: true });
+const allTypes = [
+  "normal", "fire", "water", "grass", "electric", "ice",
+  "fighting", "poison", "ground", "flying", "psychic",
+  "bug", "rock", "ghost", "dark", "dragon", "steel", "fairy"
+];
 
 function initTypeFilter() {
-  const types = new Set();
+  typeFilter.innerHTML = '';
+  const allOpt = document.createElement("option");
+  allOpt.value = "";
+  allOpt.textContent = "All Types";
+  typeFilter.appendChild(allOpt);
 
-  // Scan all cards for types
-  Array.from(pokemonListEl.children).forEach(card => {
-    const typeText = card.children[2].textContent; // "fire, flying"
-    typeText.split(", ").forEach(t => types.add(t));
-  });
-
-  // Populate dropdown
-  [...types].sort().forEach(type => {
+  allTypes.forEach(type => {
     const opt = document.createElement("option");
     opt.value = type;
     opt.textContent = type[0].toUpperCase() + type.slice(1);
@@ -31,22 +27,35 @@ function initTypeFilter() {
   });
 }
 
-function applyFilters() {
+export function setAllPokemon(pokemonArray) {
+  allPokemon = pokemonArray;
+  renderFilteredList();
+  initTypeFilter();
+}
+
+function renderFilteredList() {
   const search = searchInput.value.toLowerCase();
   const type = typeFilter.value;
 
-  Array.from(pokemonListEl.children).forEach(card => {
-    const name = card.children[1].textContent.toLowerCase();
-    const types = card.children[2].textContent.toLowerCase(); // "fire, flying"
+  pokemonListEl.innerHTML = '';
 
-    let visible = true;
+  allPokemon.forEach(p => {
+    const name = p.name.toLowerCase();
+    const types = p.types.map(t => t.type.name).join(', ').toLowerCase();
 
-    if (search && !name.includes(search)) visible = false;
-    if (type && !types.includes(type.toLowerCase())) visible = false;
+    if ((search && !name.includes(search)) || (type && !types.includes(type.toLowerCase()))) return;
 
-    card.style.display = visible ? "block" : "none";
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <img src="${p.sprites.front_default}" alt="${p.name}">
+      <p>${p.name}</p>
+      <p>${p.types.map(t => t.type.name).join(', ')}</p>
+    `;
+    card.addEventListener('click', () => openModal(p));
+    pokemonListEl.appendChild(card);
   });
 }
 
-searchInput?.addEventListener("input", applyFilters);
-typeFilter?.addEventListener("change", applyFilters);
+searchInput?.addEventListener("input", renderFilteredList);
+typeFilter?.addEventListener("change", renderFilteredList);

@@ -1,7 +1,7 @@
 
 import { fetchPokemonList, fetchPokemonDetails} from './pokemon.js';
 import { addPokemonToTeam, removePokemonFromTeam, team, getTeamStats } from './teambuilder.js';
-
+import { setAllPokemon } from './pokedex.js'; 
 
 
 const pokemonListEl = document.getElementById('pokemon-list');
@@ -24,12 +24,14 @@ let currentPokemon = null;
 
 
   // Load Pokémon
-if (pokemonListEl) {
-  fetchPokemonList(900).then(async list => {
-    allPokemon = list;
-    await renderPage(0); // load first page
-  });
-}
+if (pokemonListEl) 
+
+fetchPokemonList(900).then(async list => {
+  allPokemon = list;
+  setAllPokemon(allPokemon); 
+  await renderPage(0);
+});
+
 
 async function renderPage(page) {
   currentPage = page;

@@ -51,23 +51,24 @@ async function fetchAndCachePokemon(limit = 900) {
 }
 
 function renderPage(page) {
-  currentPage = page;
-  pokemonListEl.innerHTML = '';
+    currentPage = page;
+    pokemonListEl.innerHTML = '';
 
-  const start = page * pageSize;
-  const end = start + pageSize;
-  const slice = displayedPokemon.slice(start, end);
+    const start = page * pageSize;
+    const end = start + pageSize;
+    const slice = displayedPokemon.slice(start, end);
 
-  slice.forEach(p => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-      <img src="${p.sprites.front_default}" alt="${p.name}">
-      <p>${p.name}</p>
-      <p>${p.types.map(t => t.type.name).join(', ')}</p>`;
-    card.addEventListener('click', () => openModal(p));
-    pokemonListEl.appendChild(card);
-  });
+    slice.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+            <img src="${p.sprites.front_default}" alt="${p.name}">
+            <p>${p.name}</p>
+            <p>${p.types.map(t => t.type.name).join(', ')}</p>
+        `;
+        card.addEventListener('click', () => openModal(p));
+        pokemonListEl.appendChild(card);
+    });
 }
 
 
@@ -98,23 +99,24 @@ addToTeamBtn?.addEventListener('click', () => {
 });
 
 function renderTeam() {
-  teamSlotsEl.innerHTML = '';
-  for (let i = 0; i < 6; i++) {
-    const slot = document.createElement('div');
-    slot.className = 'slot';
-    if (team[i]) {
-      slot.classList.add('filled');
-      slot.innerHTML = `
-        <img src="${team[i].sprites.front_default}" alt="${team[i].name}" title="Click to remove">
-        <p>${team[i].name}</p>
-      `;
-      slot.addEventListener('click', () => {
-        removePokemonFromTeam(team[i].name);
-        renderTeam();
-      });
+    teamSlotsEl.innerHTML = '';
+
+    for (let i = 0; i < 6; i++) {
+        const slot = document.createElement('div');
+        slot.className = 'slot';
+        if (team[i]) {
+            slot.classList.add('filled');
+            slot.innerHTML = `
+                <img src="${team[i].sprites.front_default}" alt="${team[i].name}" title="Click to remove">
+                <p>${team[i].name}</p>
+            `;
+            slot.addEventListener('click', () => {
+                removePokemonFromTeam(team[i].name);
+                renderTeam();
+            });
+        }
+        teamSlotsEl.appendChild(slot);
     }
-    teamSlotsEl.appendChild(slot);
-  }
 
   const stats = getTeamStats();
   if (stats) {

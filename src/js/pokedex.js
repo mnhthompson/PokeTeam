@@ -1,4 +1,4 @@
-// pokedex.js
+
 const searchInput = document.getElementById("pokemon-search-input");
 const typeFilter = document.getElementById("type-filter");
 const pokemonListEl = document.getElementById("pokemon-list");

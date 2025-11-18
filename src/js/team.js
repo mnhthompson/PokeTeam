@@ -12,8 +12,8 @@ const modalAbilities = document.getElementById('modal-abilities');
 const modalStats = document.getElementById('modal-stats');
 const addToTeamBtn = document.getElementById('add-to-team');
 
-let allPokemon = [];
-let filteredPokemon = [];
+export let allPokemon = [];
+export let filteredPokemon = [];
 let currentPage = 0;
 const pageSize = 6;
 let currentPokemon = null;
@@ -32,10 +32,9 @@ export async function getPokemonDetails(p) {
 export async function loadAllPokemon() {
   const list = await fetchPokemonList(900);
   allPokemon = list;
-  filteredPokemon = [...allPokemon]; 
+  filteredPokemon = [...allPokemon];
   await renderPage(0);
 }
-
 
 async function createPokemonCard(pokemon) {
   const details = pokemon.stats ? pokemon : await getPokemonDetails(pokemon);
@@ -128,5 +127,3 @@ document.getElementById('next-page')?.addEventListener('click', () => {
 document.getElementById('prev-page')?.addEventListener('click', () => {
   if (currentPage > 0) renderPage(currentPage - 1, filteredPokemon);
 });
-
-export { allPokemon, filteredPokemon, loadAllPokemon };

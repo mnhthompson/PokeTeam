@@ -1,4 +1,5 @@
 import { fetchPokemonDetails } from './pokemon.js';
+import { saveTeam } from './storage.js';
 
 const TEAM_SIZE = 6; 
 
@@ -29,6 +30,31 @@ async function generateDailyTeam() {
   });
 }
 document.addEventListener("DOMContentLoaded", generateDailyTeam);
+
+
+let currentDailyTeam = [];  
+const saveDailyTeamBtn = document.getElementById('save-daily-team');
+if (saveDailyTeamBtn) {
+  saveDailyTeamBtn.addEventListener('click', () => {
+    if (!currentDailyTeam || currentDailyTeam.length === 0) {
+      alert("No team to save!");
+      return;
+    }
+    const name = prompt("Enter a name for this team:");
+    if (!name) {
+      alert("Team not saved — name is required.");
+      return;
+    }
+    try {
+      saveTeam(name, currentDailyTeam);
+      alert(`Team "${name}" saved successfully!`);
+    } catch (err) {
+      alert("Error saving team: " + err.message);
+    }
+  });
+}
+
+
 
 
 // Navigation Buttons

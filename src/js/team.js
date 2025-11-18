@@ -122,8 +122,8 @@ function renderTeam() {
     document.getElementById('avg-attack').textContent = stats.attack ?? 0;
     document.getElementById('avg-defense').textContent = stats.defense ?? 0;
     document.getElementById('avg-speed').textContent = stats.speed ?? 0;
-    document.getElementById('avg-special-attack').textContent = stats.specialattack ?? 0;
-   document.getElementById('avg-special-defense').textContent = stats.specialdefense ?? 0;
+    document.getElementById('avg-specialattack').textContent = stats.specialattack ?? 0;
+   document.getElementById('avg-specialdefense').textContent = stats.specialdefense ?? 0;
 
   }
 }

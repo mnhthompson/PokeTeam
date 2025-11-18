@@ -19,8 +19,8 @@
 /* ===================== Global Styles ===================== */
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+  margin: 10px;
+  padding: 10px;
   font-family: var(--font-body);
 }
 
@@ -36,7 +36,7 @@ h1 {
   font-weight: 800;
   text-align: center;
   margin: 1rem 0;
-  color: #333;
+  color: var(--color-text);
   letter-spacing: -1px;
 }
 

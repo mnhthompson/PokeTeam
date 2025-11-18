@@ -24,15 +24,21 @@ export function getTeamStats() {
     stats.attack += p.stats.find(s => s.stat.name === 'attack').base_stat;
     stats.defense += p.stats.find(s => s.stat.name === 'defense').base_stat;
     stats.speed += p.stats.find(s => s.stat.name === 'speed').base_stat;
-    stats.specialattack += p.stats.find(s => s.stat.name === 'specialattack').base_stat;
-    stats.specialdefense += p.stats.find(s => s.stat.name === 'specialdefense').base_stat;
+    stats.specialattack += p.stats.find(s => s.stat.name === 'special-attack').base_stat;
+    stats.specialdefense += p.stats.find(s => s.stat.name === 'special-defense').base_stat;
   });
   return {
     hp: Math.round(stats.hp / team.length),
     attack: Math.round(stats.attack / team.length),
     defense: Math.round(stats.defense / team.length),
     speed: Math.round(stats.speed / team.length),
-    specialattack: Math.round(stats.specialattack / team.length),
-    specialdefense: Math.round(stats.specialdefense / team.length)
+    specialattack: Math.round(stats.special-attack / team.length),
+    specialdefense: Math.round(stats.special-defense / team.length)
   };
+}
+
+export function getTeamTypes() {
+  const types = new Set();
+  team.forEach(p => p.types.forEach(t => types.add(t.type.name)));
+  return Array.from(types);
 }

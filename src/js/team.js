@@ -1,6 +1,9 @@
 import { fetchPokemonList, fetchPokemonDetails } from './pokemon.js';
 import { addPokemonToTeam, removePokemonFromTeam, team, getTeamStats } from './teambuilder.js';
 import { setAllPokemon } from './pokedex.js';
+import { team, addPokemonToTeam, clearTeam } from './teambuilder.js';
+import { saveTeam } from './storage.js';
+
 
 const pokemonListEl = document.getElementById('pokemon-list');
 const teamSlotsEl = document.getElementById('team-slots');
@@ -12,6 +15,9 @@ const modalType = document.getElementById('modal-type');
 const modalAbilities = document.getElementById('modal-abilities');
 const modalStats = document.getElementById('modal-stats');
 const addToTeamBtn = document.getElementById('add-to-team');
+const saveBtn = document.getElementById('save-team');
+const teamNameInput = document.getElementById('team-name');
+
 
 let allPokemon = [];
 let currentPokemon = null;
@@ -122,4 +128,20 @@ function renderTeam() {
   }
 }
 
-export { allPokemon, renderPage };
+
+saveBtn.addEventListener('click', () => {
+  const name = teamNameInput.value.trim();
+  if (!name) return alert('Enter a team name!');
+  if (!team.length) return alert('Cannot save empty team!');
+  saveTeam(name, team);
+  alert(`Team "${name}" saved!`);
+});
+
+
+const savedTeam = JSON.parse(sessionStorage.getItem('currentTeam') || '[]');
+if (savedTeam.length) {
+  clearTeam();
+  savedTeam.forEach(p => addPokemonToTeam(p));
+  sessionStorage.removeItem('currentTeam');}
+
+  export { allPokemon, renderPage };

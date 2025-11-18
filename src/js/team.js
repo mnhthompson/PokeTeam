@@ -128,19 +128,20 @@ function renderTeam() {
 }
 
 
-saveBtn.addEventListener('click', () => {
-  const name = teamNameInput.value.trim();
-  if (!name) return alert('Enter a team name!');
-  if (!team.length) return alert('Cannot save empty team!');
-  saveTeam(name, team);
-  alert(`Team "${name}" saved!`);
-});
-
 
 const savedTeam = JSON.parse(sessionStorage.getItem('currentTeam') || '[]');
 if (savedTeam.length) {
   clearTeam();
   savedTeam.forEach(p => addPokemonToTeam(p));
   sessionStorage.removeItem('currentTeam');}
+
+
+saveBtn.addEventListener('click', () => {
+  const name = teamNameInput.value.trim();
+  if (!name) return alert('Please enter a team name!');
+  if (!team.length) return alert('Cannot save an empty team!');
+  saveTeam(name, team);
+  alert(`Team "${name}" saved!`);
+});
 
   export { allPokemon, renderPage };

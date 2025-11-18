@@ -1,10 +1,8 @@
-import { openModal } from './team.js'; // reuse modal
+import { allPokemon, renderPage, openModal } from './team.js';
 
 const searchInput = document.getElementById("pokemon-search-input");
 const typeFilter = document.getElementById("type-filter");
 const pokemonListEl = document.getElementById("pokemon-list");
-
-let allPokemon = [];
 
 const allTypes = [
   "normal", "fire", "water", "grass", "electric", "ice",
@@ -26,35 +24,24 @@ function initTypeFilter() {
     typeFilter.appendChild(opt);
   });
 }
-
-export function setAllPokemon(pokemonArray) {
-  allPokemon = pokemonArray;
-  renderFilteredList();
-  initTypeFilter();
-}
+initTypeFilter();
 
 async function renderFilteredList() {
-  pokemonListEl.innerHTML = '';
+  const search = searchInput.value.toLowerCase();
+  const type = typeFilter.value;
 
-  for (const p of allPokemon) {
+  const filtered = allPokemon.filter(p => {
     const name = p.name.toLowerCase();
     const types = p.types?.map(t => t.type.name).join(', ').toLowerCase() || '';
-    if ((search && !name.includes(search)) || (type && !types.includes(type.toLowerCase()))) continue;
+    return (!search || name.includes(search)) && (!type || types.includes(type.toLowerCase()));
+  });
 
-    const details = await fetchPokemonDetails(p.name);
-
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-      <img src="${details.sprites.front_default}" alt="${details.name}">
-      <p>${details.name}</p>
-      <p>${details.types.map(t => t.type.name).join(', ')}</p>
-    `;
-    card.addEventListener('click', () => openModal(details));
-    pokemonListEl.appendChild(card);
-  }
+  await renderPage(0, filtered);
 }
-
 
 searchInput?.addEventListener("input", renderFilteredList);
 typeFilter?.addEventListener("change", renderFilteredList);
+
+export function setAllPokemon(pokemonArray) {
+  // optional, if needed for external updates
+}

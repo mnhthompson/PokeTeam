@@ -1,7 +1,6 @@
 import { fetchPokemonList, fetchPokemonDetails } from './pokemon.js';
-import { addPokemonToTeam, removePokemonFromTeam, team, getTeamStats } from './teambuilder.js';
+import { addPokemonToTeam, removePokemonFromTeam, team, getTeamStats, clearTeam } from './teambuilder.js';
 import { setAllPokemon } from './pokedex.js';
-import { team, addPokemonToTeam, clearTeam } from './teambuilder.js';
 import { saveTeam } from './storage.js';
 
 

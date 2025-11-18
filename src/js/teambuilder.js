@@ -24,8 +24,8 @@ export function getTeamStats() {
     stats.attack += p.stats.find(s => s.stat.name === 'attack').base_stat;
     stats.defense += p.stats.find(s => s.stat.name === 'defense').base_stat;
     stats.speed += p.stats.find(s => s.stat.name === 'speed').base_stat;
-    stats.specialattack += p.stats.find(s => s.stat.name === 'special-attack').base_stat;
-    stats.specialdefense += p.stats.find(s => s.stat.name === 'special-defense').base_stat;
+    stats.specialattack += p.stats.find(s => s.stat.name === 'specialattack').base_stat;
+    stats.specialdefense += p.stats.find(s => s.stat.name === 'specialdefense').base_stat;
   });
   return {
     hp: Math.round(stats.hp / team.length),

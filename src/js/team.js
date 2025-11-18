@@ -125,3 +125,4 @@ document.getElementById('prev-page')?.addEventListener('click', () => {
   if (currentPage > 0) renderPage(currentPage - 1);
 });
 
+export { openModal };

@@ -158,6 +158,5 @@ document.addEventListener("filterChanged", e => {
 });
 
 
-fetchAndCachePokemon(900).then(() => renderPage(0));
 
 init();

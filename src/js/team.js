@@ -1,8 +1,5 @@
-
-import { fetchPokemonList, fetchPokemonDetails} from './pokemon.js';
+import { fetchPokemonList, fetchPokemonDetails } from './pokemon.js';
 import { addPokemonToTeam, removePokemonFromTeam, team, getTeamStats } from './teambuilder.js';
-
-
 
 const pokemonListEl = document.getElementById('pokemon-list');
 const teamSlotsEl = document.getElementById('team-slots');
@@ -15,29 +12,23 @@ const modalAbilities = document.getElementById('modal-abilities');
 const modalStats = document.getElementById('modal-stats');
 const addToTeamBtn = document.getElementById('add-to-team');
 
-
 let currentPage = 0;
 const pageSize = 6;
-
 let currentPokemon = null;
 
-
-let allPokemon = [];        
-let displayedPokemon = [];  
+let allPokemon = [];
+let displayedPokemon = [];
 
 async function init() {
-  await fetchAndCachePokemon(900); 
-  renderPage(0); }                 
+  await fetchAndCachePokemon(900);
+  displayedPokemon = [...allPokemon]; // show all initially
+  renderPage(0);
+}
 
-
-
-
-  // Load Pokémon
 async function fetchAndCachePokemon(limit = 900) {
   const stored = JSON.parse(localStorage.getItem('allPokemon') || '[]');
   if (stored.length >= limit) {
     allPokemon = stored;
-    displayedPokemon = [...allPokemon];
     return allPokemon;
   }
 
@@ -56,11 +47,10 @@ async function fetchAndCachePokemon(limit = 900) {
   }
 
   localStorage.setItem('allPokemon', JSON.stringify(allPokemon));
-  displayedPokemon = [...allPokemon];
   return allPokemon;
 }
 
-async function renderPage(page) {
+function renderPage(page) {
   currentPage = page;
   pokemonListEl.innerHTML = '';
 
@@ -68,16 +58,14 @@ async function renderPage(page) {
   const end = start + pageSize;
   const slice = displayedPokemon.slice(start, end);
 
-  slice.forEach(details => {
+  slice.forEach(p => {
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
-      <img src="${details.sprites.front_default}" alt="${details.name}">
-      <p>${details.name}</p>
-      <p>${details.types.map(t => t.type.name).join(', ')}</p>
-    `;
-
-    card.addEventListener('click', () => openModal(details));
+      <img src="${p.sprites.front_default}" alt="${p.name}">
+      <p>${p.name}</p>
+      <p>${p.types.map(t => t.type.name).join(', ')}</p>`;
+    card.addEventListener('click', () => openModal(p));
     pokemonListEl.appendChild(card);
   });
 }
@@ -128,7 +116,6 @@ function renderTeam() {
     teamSlotsEl.appendChild(slot);
   }
 
-  // Update stats
   const stats = getTeamStats();
   if (stats) {
     document.getElementById('avg-hp').textContent = stats.hp;
@@ -139,8 +126,6 @@ function renderTeam() {
     document.getElementById('avg-specialdefence').textContent = stats.specialdefense;
   }
 }
-
-
 
 document.getElementById('next-page')?.addEventListener('click', () => {
   const maxPage = Math.floor(displayedPokemon.length / pageSize);
@@ -153,10 +138,8 @@ document.getElementById('prev-page')?.addEventListener('click', () => {
 
 
 document.addEventListener("filterChanged", e => {
-  displayedPokemon = e.detail; // filtered array
+  displayedPokemon = e.detail;
   renderPage(0);
 });
-
-
 
 init();

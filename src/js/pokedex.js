@@ -33,29 +33,28 @@ export function setAllPokemon(pokemonArray) {
   initTypeFilter();
 }
 
-function renderFilteredList() {
-  const search = searchInput.value.toLowerCase();
-  const type = typeFilter.value;
-
+async function renderFilteredList() {
   pokemonListEl.innerHTML = '';
 
-  allPokemon.forEach(p => {
+  for (const p of allPokemon) {
     const name = p.name.toLowerCase();
-    const types = p.types.map(t => t.type.name).join(', ').toLowerCase();
+    const types = p.types?.map(t => t.type.name).join(', ').toLowerCase() || '';
+    if ((search && !name.includes(search)) || (type && !types.includes(type.toLowerCase()))) continue;
 
-    if ((search && !name.includes(search)) || (type && !types.includes(type.toLowerCase()))) return;
+    const details = await fetchPokemonDetails(p.name);
 
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
-      <img src="${p.sprites.front_default}" alt="${p.name}">
-      <p>${p.name}</p>
-      <p>${p.types.map(t => t.type.name).join(', ')}</p>
+      <img src="${details.sprites.front_default}" alt="${details.name}">
+      <p>${details.name}</p>
+      <p>${details.types.map(t => t.type.name).join(', ')}</p>
     `;
-    card.addEventListener('click', () => openModal(p));
+    card.addEventListener('click', () => openModal(details));
     pokemonListEl.appendChild(card);
-  });
+  }
 }
+
 
 searchInput?.addEventListener("input", renderFilteredList);
 typeFilter?.addEventListener("change", renderFilteredList);

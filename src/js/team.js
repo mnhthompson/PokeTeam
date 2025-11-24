@@ -130,6 +130,25 @@ modal.addEventListener('keydown', (e) => {
   }
 });
 
+function renderTypeCoverage() {
+  const typeCoverageEl = document.getElementById('type-coverage');
+  if (!typeCoverageEl) return;
+
+  const types = getTeamTypes(); // returns array of unique type names
+  typeCoverageEl.innerHTML = '';
+
+  if (types.length === 0) {
+    typeCoverageEl.innerHTML = '<li>No types yet</li>';
+    return;
+  }
+
+  types.forEach(type => {
+    const li = document.createElement('li');
+    li.textContent = type;
+    typeCoverageEl.appendChild(li);
+  });
+}
+
 function renderTeam() {
   teamSlotsEl.innerHTML = '';
   for (let i = 0; i < 6; i++) {
@@ -167,6 +186,8 @@ function renderTeam() {
    document.getElementById('avg-specialdefense').textContent = stats.specialdefense ?? 0;
 
   }
+  
+  renderTypeCoverage();
 }
 
 

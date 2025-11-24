@@ -2,7 +2,9 @@ import { fetchPokemonList, fetchPokemonDetails } from './pokemon.js';
 import { addPokemonToTeam, removePokemonFromTeam, team, getTeamStats, clearTeam } from './teambuilder.js';
 import { setAllPokemon } from './pokedex.js';
 import { saveTeam } from './storage.js';
+import { loadHeaderFooter } from "./utils.mjs";
 
+loadHeaderFooter();
 
 const pokemonListEl = document.getElementById('pokemon-list');
 const teamSlotsEl = document.getElementById('team-slots');

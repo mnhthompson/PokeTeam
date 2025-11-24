@@ -1,4 +1,7 @@
 import { getSavedTeams, deleteTeam } from './storage.js';
+import { loadHeaderFooter } from "./utils.mjs";
+
+loadHeaderFooter();
 
 const savedTeamsEl = document.getElementById('saved-teams-list');
 const exportBtn = document.getElementById('export-json');

@@ -1,5 +1,9 @@
 import { fetchPokemonDetails } from './pokemon.js';
 import { saveTeam } from './storage.js';
+import { loadHeaderFooter } from "./utils.mjs";
+
+loadHeaderFooter();
+
 
 const TEAM_SIZE = 6; 
 let currentDailyTeam = [];  

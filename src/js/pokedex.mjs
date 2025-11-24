@@ -32,7 +32,9 @@ async function renderFilteredList() {
 
   const filtered = allPokemon.filter(p => {
     const name = p.name.toLowerCase();
-    const types = p.types?.map(t => t.type.name).join(', ').toLowerCase() || '';
+    const types = (p.types || []).map(t => t.type.name.toLowerCase());
+
+   
     return (!search || name.includes(search)) && (!type || types.includes(type.toLowerCase()));
   });
 

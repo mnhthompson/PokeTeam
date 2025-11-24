@@ -34,6 +34,8 @@ async function renderFilteredList() {
     const name = p.name.toLowerCase();
     const types = (p.types || []).map(t => t.type.name.toLowerCase());
 
+    console.log(p.name, types, type.toLowerCase(), types.includes(type.toLowerCase()));
+
    
     return (!search || name.includes(search)) && (!type || types.includes(type.toLowerCase()));
   });

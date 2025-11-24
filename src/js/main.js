@@ -30,6 +30,8 @@ async function generateDailyTeam() {
     container.appendChild(slot);
   });
 }
+
+
 document.addEventListener("DOMContentLoaded", generateDailyTeam);
 
 

@@ -37,6 +37,10 @@ async function createPokemonCard(pokemon) {
 
   const card = document.createElement('div');
   card.className = 'card';
+  card.setAttribute('tabindex', '0');                   
+  card.setAttribute('role', 'button');                  
+  card.setAttribute('aria-label', `View details for ${details.name}`);
+
   card.innerHTML = `
     <img src="${details.sprites.front_default}" alt="${details.name}">
     <p>${details.name}</p>
@@ -44,6 +48,13 @@ async function createPokemonCard(pokemon) {
   `;
 
   card.addEventListener('click', () => openModal(details));
+  card.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();  
+      openModal(details);
+    }
+  });
+
   return card;
 }
 
@@ -85,8 +96,15 @@ export function openModal(pokemon) {
     modalStats.appendChild(li);
   });
   modal.style.display = 'flex';
+    addToTeamBtn.focus();
 }
 modalClose?.addEventListener('click', () => (modal.style.display = 'none'));
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && modal.style.display === 'flex') {
+    modal.style.display = 'none';
+  }
+});
 
 addToTeamBtn?.addEventListener('click', async () => {
   if (!currentPokemon) return;
@@ -96,6 +114,21 @@ addToTeamBtn?.addEventListener('click', async () => {
   modal.style.display = 'none';
 });
 
+modal.addEventListener('keydown', (e) => {
+  if (e.key === 'Tab') {
+    const focusable = modal.querySelectorAll('button, [tabindex]:not([tabindex="-1"])');
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+});
 
 function renderTeam() {
   teamSlotsEl.innerHTML = '';
@@ -112,7 +145,15 @@ function renderTeam() {
         removePokemonFromTeam(team[i].name);
         renderTeam();
       });
+
+       slot.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      removePokemonFromTeam(team[i].name);
+      renderTeam();
+       }
+      });
     }
+
     teamSlotsEl.appendChild(slot);
   }
 

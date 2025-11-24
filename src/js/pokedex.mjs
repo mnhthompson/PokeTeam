@@ -1,7 +1,8 @@
-import { allPokemon as globalPokemon, renderPage, openModal } from './team.mjs';
+import { allPokemon, renderPage, openModal } from './team.js';
 
 const searchInput = document.getElementById("pokemon-search-input");
 const typeFilter = document.getElementById("type-filter");
+const pokemonListEl = document.getElementById("pokemon-list");
 
 const allTypes = [
   "normal", "fire", "water", "grass", "electric", "ice",
@@ -9,20 +10,8 @@ const allTypes = [
   "bug", "rock", "ghost", "dark", "dragon", "steel", "fairy"
 ];
 
-let filteredPokemon = [];
-let currentPage = 0;
-const pageSize = 6;
-
-export function setAllPokemon(pokemonArray) {
-  filteredPokemon = pokemonArray;
-  renderFilteredList();
-  initTypeFilter();
-}
-
 function initTypeFilter() {
-  if (!typeFilter) return;
   typeFilter.innerHTML = '';
-
   const allOpt = document.createElement("option");
   allOpt.value = "";
   allOpt.textContent = "All Types";
@@ -35,36 +24,24 @@ function initTypeFilter() {
     typeFilter.appendChild(opt);
   });
 }
-
+initTypeFilter();
 
 async function renderFilteredList() {
-  const search = searchInput?.value.toLowerCase() || '';
-  const type = typeFilter?.value.toLowerCase() || '';
+  const search = searchInput.value.toLowerCase();
+  const type = typeFilter.value;
 
-  filteredPokemon = globalPokemon.filter(p => {
+  const filtered = allPokemon.filter(p => {
     const name = p.name.toLowerCase();
-    const types = p.types?.map(t => t.type.name.toLowerCase()) || [];
-
-    const nameMatch = !search || name.includes(search);
-    const typeMatch = !type || types.includes(type);
-
-    return nameMatch && typeMatch;
+    const types = p.types?.map(t => t.type.name).join(', ').toLowerCase() || '';
+    return (!search || name.includes(search)) && (!type || types.includes(type.toLowerCase()));
   });
 
-  currentPage = 0;
-  await renderPage(currentPage, filteredPokemon);
+  await renderPage(0, filtered);
 }
-
-
-document.getElementById('next-page')?.addEventListener('click', () => {
-  const maxPage = Math.floor(filteredPokemon.length / pageSize);
-  if (currentPage < maxPage) currentPage++, renderPage(currentPage, filteredPokemon);
-});
-
-document.getElementById('prev-page')?.addEventListener('click', () => {
-  if (currentPage > 0) currentPage--, renderPage(currentPage, filteredPokemon);
-});
-
 
 searchInput?.addEventListener("input", renderFilteredList);
 typeFilter?.addEventListener("change", renderFilteredList);
+
+export function setAllPokemon(pokemonArray) {
+
+}

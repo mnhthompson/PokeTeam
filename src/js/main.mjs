@@ -1,5 +1,5 @@
-import { fetchPokemonDetails } from './pokemon.js';
-import { saveTeam } from './storage.js';
+import { fetchPokemonDetails } from './pokemon.mjs';
+import { saveTeam } from './storage.mjs';
 import { loadHeaderFooter } from "./utils.mjs";
 
 loadHeaderFooter();

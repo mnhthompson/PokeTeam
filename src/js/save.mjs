@@ -1,4 +1,4 @@
-import { getSavedTeams, deleteTeam } from './storage.js';
+import { getSavedTeams, deleteTeam } from './storage.mjs';
 import { loadHeaderFooter } from "./utils.mjs";
 
 loadHeaderFooter();

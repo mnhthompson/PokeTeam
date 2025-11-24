@@ -1,7 +1,7 @@
-import { fetchPokemonList, fetchPokemonDetails } from './pokemon.js';
-import { addPokemonToTeam, removePokemonFromTeam, team, getTeamStats, clearTeam } from './teambuilder.js';
-import { setAllPokemon } from './pokedex.js';
-import { saveTeam } from './storage.js';
+import { fetchPokemonList, fetchPokemonDetails } from './pokemon.mjs';
+import { addPokemonToTeam, removePokemonFromTeam, team, getTeamStats, clearTeam } from './teambuilder.mjs';
+import { setAllPokemon } from './pokedex.mjs';
+import { saveTeam } from './storage.mjs';
 import { loadHeaderFooter } from "./utils.mjs";
 
 loadHeaderFooter();

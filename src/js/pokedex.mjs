@@ -1,4 +1,4 @@
-import { allPokemon, renderPage, openModal } from './team.js';
+import { allPokemon, renderPage, openModal } from './team.mjs';
 
 const searchInput = document.getElementById("pokemon-search-input");
 const typeFilter = document.getElementById("type-filter");

@@ -132,11 +132,32 @@ modal.addEventListener('keydown', (e) => {
   }
 });
 
+const typeIcons = {
+  normal: '/images/NormalIC_LA.png',
+  fire: '/images/FireIC_LA.png',
+  water: '/images/WaterIC_LA.png',
+  grass: '/images/GrassIC_LA.png',
+  electric: '/images/ElectricIC_LA.png',
+  ice: '/images/IceIC_LA.png',
+  fighting: '/images/FightingIC_LA.png',
+  poison: '/images/PoisonIC_LA.png',
+  ground: '/images/GroundIC_LA.png',
+  flying: '/images/FlyingIC_LA.png',
+  psychic: '/images/PsychicIC_LA.png',
+  bug: '/images/BugIC_LA.png',
+  rock: '/images/RockIC_LA.png',
+  ghost: '/images/GhostIC_LA.png',
+  dark: '/images/DarkIC_LA.png',
+  dragon: '/images/DragonIC_LA.png',
+  steel: '/images/SteelIC_LA.png',
+  fairy: '/images/FairyIC_LA.png'
+};
+
 function renderTypeCoverage() {
   const typeCoverageEl = document.getElementById('type-coverage');
   if (!typeCoverageEl) return;
 
-  const types = getTeamTypes(); // returns array of unique type names
+  const types = getTeamTypes();
   typeCoverageEl.innerHTML = '';
 
   if (types.length === 0) {
@@ -146,7 +167,12 @@ function renderTypeCoverage() {
 
   types.forEach(type => {
     const li = document.createElement('li');
-    li.textContent = type;
+    const img = document.createElement('img');
+    img.src = typeIcons[type.toLowerCase()] || '//images/DefaultIC_LA.png';
+    img.alt = type;
+    img.title = type;
+    img.className = 'type-icon'; // add a class for sizing in CSS
+    li.appendChild(img);
     typeCoverageEl.appendChild(li);
   });
 }

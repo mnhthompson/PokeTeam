@@ -271,6 +271,23 @@ button:hover {
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-default);
 }
+/* ===================== Types  ===================== */
+#type-coverage {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#type-coverage li {
+  display: inline-block;
+  margin: 2px;
+}
+
+#type-coverage li img.type-icon {
+  width: 32px;
+  height: 32px;
+}
+
 
 /* ===================== Phone ===================== */
 @media (max-width: 900px) {

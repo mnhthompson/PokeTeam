@@ -25,8 +25,8 @@ let currentPokemon = null;
 
 
 async function loadAllPokemon() {
-  const list = await fetchPokemonList(900);
-  allPokemon = list; 
+  const list = await fetchPokemonList(900); 
+  allPokemon = await Promise.all(list.map(p => fetchPokemonDetails(p.name)));
   setAllPokemon(allPokemon); 
   await renderPage(0);
 }

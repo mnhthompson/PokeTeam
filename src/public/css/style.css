@@ -1,4 +1,4 @@
-@font-face {font-family: "Pokemon Solid";src: url("/fonts/PokemonSolid.woff2") format("woff2"),url("/fonts/PokemonSolid.woff") format("woff"),url("/fonts/PokemonSolid.ttf") format("truetype");font-weight: 400;font-style: normal; font-display: swap;}
+@font-face {font-family: "PokemonSolid";src: url("/fonts/PokemonSolidNormal-xyWR.ttf") format("truetype");font-weight: normal;font-style: normal;font-display: swap;}
 
 :root {
   --color-bg: #FFFDD0;           
@@ -13,7 +13,7 @@
   --color-slot-empty: #d3d3d3;     
   --font-heading: 'Ariel', sans-serif;
   --font-body: 'Ariel', sans-serif;
-  --font-nav: 'Pokemon Solid', sans-serif; 
+  --font-nav: 'PokemonSolid', sans-serif; 
   --font-body-size: 16px;
   --border-radius: 8px;           
   --shadow-default: 0 2px 6px var(--color-card-shadow);

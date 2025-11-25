@@ -1,3 +1,5 @@
+@font-face {font-family: "PokemonSolid";src: url("/fonts/PokemonSolid.woff2") format("woff2"),url("/fonts/PokemonSolid.woff") format("woff"),url("/fonts/PokemonSolid.ttf") format("truetype");font-weight: 400;font-style: normal; font-display: swap;}
+
 :root {
   --color-bg: #FFFDD0;           
   --color-text: #000000;        
@@ -11,6 +13,7 @@
   --color-slot-empty: #d3d3d3;     
   --font-heading: 'Ariel', sans-serif;
   --font-body: 'Ariel', sans-serif;
+  --font-nav: 'PokemonSolid', sans-serif; 
   --font-body-size: 16px;
   --border-radius: 8px;           
   --shadow-default: 0 2px 6px var(--color-card-shadow);
@@ -46,15 +49,16 @@ header nav {
   justify-content: center; 
   margin-top: 10px;
   padding: 10px 0;
-  background-color: #f0e68c; 
+  background-color: darkblue; 
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-default);
 }
 
 header nav a {
   text-decoration: none;
-  color: var(--color-text);
+  color: white;
   font-weight: bold;
+  --font-nav: 'PokemonSolid', sans-serif; 
   padding: 8px 16px;
   border-radius: var(--border-radius);
   transition: background 0.2s, color 0.2s, transform 0.2s;

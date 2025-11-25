@@ -1,4 +1,4 @@
-@font-face {font-family: "PokemonSolid";src: url("/fonts/PokemonSolid.woff2") format("woff2"),url("/fonts/PokemonSolid.woff") format("woff"),url("/fonts/PokemonSolid.ttf") format("truetype");font-weight: 400;font-style: normal; font-display: swap;}
+@font-face {font-family: "Pokemon Solid";src: url("/fonts/PokemonSolid.woff2") format("woff2"),url("/fonts/PokemonSolid.woff") format("woff"),url("/fonts/PokemonSolid.ttf") format("truetype");font-weight: 400;font-style: normal; font-display: swap;}
 
 :root {
   --color-bg: #FFFDD0;           

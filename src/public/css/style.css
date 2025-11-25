@@ -58,8 +58,8 @@ header nav a {
   text-decoration: none;
   color: white;
   font-weight: bold;
-  --font-nav: 'PokemonSolid', sans-serif; 
   padding: 8px 16px;
+  font-family: var(--font-nav);
   border-radius: var(--border-radius);
   transition: background 0.2s, color 0.2s, transform 0.2s;
 }

@@ -169,7 +169,7 @@ button:hover {
   text-transform: capitalize;
   text-align: center;
   margin: 0;
-  font-size: 14px;
+  font-size: clamp(10px, 2.5vw, 14px);
 }
 
 
@@ -191,7 +191,7 @@ button:hover {
   text-transform: capitalize;
   text-align: center;
   margin: 0;
-  font-size: 14px;
+  font-size: clamp(10px, 2.5vw, 14px);
 }
 
 /* ===================== Modals ===================== */

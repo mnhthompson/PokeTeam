@@ -250,6 +250,10 @@ button:hover {
   font-size: 16px;
 }
 
+.modal-type {
+  height: 32px;
+}
+
 /* ===================== Layout Containers ===================== */
 .container {
   width: 90%;

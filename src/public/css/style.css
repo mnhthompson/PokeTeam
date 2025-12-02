@@ -221,18 +221,25 @@ button:hover {
   z-index: 1000;
 }
 
-.modal-content {
+.modal-content{
+    background-color: var(--color-bg);
+  border-radius: var(--border-radius);
   padding: 20px;
   max-width: 500px;
+  width: 90%;
   text-align: center;
-    display: block;
+}
+
+.modal-sprite {
+  display: block;
       margin: 20px auto;
       width: 150px;
       height: 150px;
       background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
       border-radius: 50%;
+      padding: 20px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-}
+    }
 
 .modal ul {
   list-style: none;

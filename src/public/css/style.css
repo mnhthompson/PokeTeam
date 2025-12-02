@@ -231,7 +231,7 @@ button:hover {
   margin: 10px;
 }
 
-.modal-content img {
+.sprite {
   display: block;
       margin: 20px auto;
       width: 150px;

@@ -43,6 +43,16 @@ h1 {
   letter-spacing: -1px;
 }
 
+h4
+{
+  font-weight: 800;
+  text-align: center;
+  color: darkblue;
+  -webkit-text-stroke: .3px rgb(255, 255, 255);
+  font-family: var(--font-nav);
+  letter-spacing: 2px;
+}
+
 
 /* ===================== Navigation ===================== */
 header nav {

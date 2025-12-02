@@ -110,8 +110,9 @@ button:hover {
 .card img {
   border: 2px solid var(--color-pokemon-border);
   border-radius: var(--border-radius);
-  width: 120px;
-  height: 120px;
+  max-width: 120px;
+  width: auto;
+  height: auto;
 }
 
 /* ===================== Team Slots ===================== */

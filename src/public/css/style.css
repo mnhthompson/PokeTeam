@@ -68,6 +68,7 @@ header nav {
 
 header nav a {
   text-decoration: none;
+  letter-spacing: 2px;
   color: white;
    -webkit-text-stroke: .3px black;
   font-weight: bold;

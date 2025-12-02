@@ -278,6 +278,7 @@ button:hover {
   padding: 10px;
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-default);
+  background-color: #ffffff;
 }
 /* ===================== Types  ===================== */
 #type-coverage {

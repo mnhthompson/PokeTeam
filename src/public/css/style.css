@@ -304,6 +304,7 @@ footer {
   background-color: darkblue; 
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-default);
+  color: white;
 }
 
 

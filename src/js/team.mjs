@@ -104,11 +104,25 @@ export function openModal(pokemon) {
 
   modalAbilities.textContent = pokemon.abilities.map(a => a.ability.name).join(', ');
   modalStats.innerHTML = '';
-  pokemon.stats.forEach(s => {
-    const li = document.createElement('li');
-    li.textContent = `${s.stat.name}: ${s.base_stat}`;
-    modalStats.appendChild(li);
-  });
+
+modalStats.innerHTML = '';
+pokemon.stats.forEach(s => {
+  const li = document.createElement('li');
+  li.className = 'stat-item';
+  const nameSpan = document.createElement('span');
+  nameSpan.textContent = `${s.stat.name}: ${s.base_stat}`;
+  li.appendChild(nameSpan);
+  const bar = document.createElement('div');
+  bar.className = 'stat-bar';
+  const fill = document.createElement('div');
+  fill.className = 'stat-fill';
+  fill.style.width = `${(s.base_stat / 255) * 100}%`; 
+  bar.appendChild(fill);
+  li.appendChild(bar);
+  modalStats.appendChild(li);
+});
+
+
   modal.style.display = 'flex';
     addToTeamBtn.focus();
 }

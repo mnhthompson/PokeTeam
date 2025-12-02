@@ -262,6 +262,7 @@ button:hover {
   background-color: #ccc; 
   overflow: hidden;
   margin-top: 5px;
+  border-radius: 10px; 
 }
 
 .stat-fill {
@@ -269,6 +270,7 @@ button:hover {
   background-color: #666; 
   width: 0;
   transition: width 0.5s ease-in-out;
+  border-radius: 10px; 
 }
 
 .stat-item {

@@ -264,6 +264,12 @@ button:hover {
   font-size: 14px; 
 }
 
+.modal p {
+  color: var(--color-text);
+  -webkit-text-stroke: .3px rgb(255, 255, 255);
+  font-family: var(--font-nav);
+}
+
 .stat-bar {
   width: 100%;
   height: 15px; 

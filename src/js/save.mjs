@@ -19,7 +19,7 @@ function renderSavedTeams() {
     const card = document.createElement('div');
     card.className = 'saved-team-card';
 
-    const title = document.createElement('h3');
+    const title = document.createElement('h4');
     title.className = 'team-title';
     title.textContent = t.name || "Unnamed Team";
     card.appendChild(title);

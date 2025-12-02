@@ -34,6 +34,8 @@ async function loadAllPokemon() {
 loadAllPokemon();
 
 
+
+
 async function createPokemonCard(pokemon) {
   const details = pokemon.stats ? pokemon : await fetchPokemonDetails(pokemon.name);
 
@@ -89,7 +91,17 @@ export function openModal(pokemon) {
   currentPokemon = pokemon;
   modalName.textContent = pokemon.name;
   modalSprite.src = pokemon.sprites.front_default;
-  modalType.textContent = pokemon.types.map(t => t.type.name).join(', ');
+
+
+  modalType.innerHTML = pokemon.types
+  .map(t => {
+    const type = t.type.name.toLowerCase();
+    const icon = typeIcons[type];
+    return `<img src="${icon}" alt="${type}" class="type-icon-modal">`;
+  })
+  .join(' ');
+
+
   modalAbilities.textContent = pokemon.abilities.map(a => a.ability.name).join(', ');
   modalStats.innerHTML = '';
   pokemon.stats.forEach(s => {

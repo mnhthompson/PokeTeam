@@ -293,6 +293,19 @@ button:hover {
   height: 32px;
 }
 
+/* ===================== footer  ===================== */
+
+footer {
+  display: flex;
+  gap: 20px;
+  justify-content: center; 
+  margin-top: 10px;
+  padding: 10px 0;
+  background-color: darkblue; 
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-default);
+}
+
 
 /* ===================== Phone ===================== */
 @media (max-width: 900px) {

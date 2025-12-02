@@ -222,7 +222,6 @@ button:hover {
 }
 
 .modal-content {
-  background-color: var(--color-bg);
   border-radius: var(--border-radius);
   padding: 20px;
   max-width: 500px;
@@ -231,6 +230,7 @@ button:hover {
       margin: 20px auto;
       width: 150px;
       height: 150px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
       border-radius: 50%;
       padding: 20px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
